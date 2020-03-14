@@ -25,8 +25,8 @@ class ImageBlur:
 
         mesh_x, mesh_y = self._get_mesh(shape)
         for box in bounding_boxes:
-            center_x = box.x + box.width / 2.
-            center_y = box.y + box.height / 2.
+            center_x = box.x1 + box.width / 2.
+            center_y = box.y1 + box.height / 2.
             sigma_x = box.width / self.blur_mask_fade
             sigma_y = box.height / self.blur_mask_fade
             delta_mask = self._gauss2d(mesh_x, mesh_y, (center_x, center_y), (sigma_x, sigma_y))
