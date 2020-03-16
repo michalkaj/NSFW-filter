@@ -53,7 +53,6 @@ class ImageBlur:
         return z
 
 
-
 class GaussianBlur:
     def __init__(self, kernel_size=3, sigma=1):
         self.kernel_size = kernel_size

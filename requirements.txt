@@ -1,0 +1,6 @@
+Pillow==7.0.0
+facenet_pytorch==2.2.9
+torch==1.4.0
+numpy==1.18.1
+torchvision==0.5.0
+opencv-python==4.2.0.32
