@@ -1,8 +1,8 @@
 import torch
 from facenet_pytorch import MTCNN
 
-from blur_face.bounding_box import BoundingBox
 from settings import FACE_DETECTION_SETTINGS
+from src.blur_face.bounding_box import BoundingBox
 
 
 class Detector:

@@ -1,3 +1,7 @@
+import os
+
+PROJECT_PATH = os.path.dirname(__file__)
+
 FACE_DETECTION_SETTINGS = {
     'image_size': 160,
     'margin': 0,
