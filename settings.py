@@ -1,6 +1,7 @@
 import os
 
 PROJECT_PATH = os.path.dirname(__file__)
+DATA_PATH = None
 
 FACE_DETECTION_SETTINGS = {
     'image_size': 160,
@@ -11,3 +12,8 @@ FACE_DETECTION_SETTINGS = {
     'post_process': True,
     'keep_all': True
 }
+
+try:
+    from user_settings import * # silence pyflakes
+except:
+    ImportError

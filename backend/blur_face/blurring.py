@@ -4,10 +4,10 @@ from PIL import Image
 
 
 class ImageBlur:
-    def __init__(self, blur_algorithm, blur_mask_fade, blur_mask_center):
+    def __init__(self, blur_algorithm, blur_mask_fade, landmark_eps=0.1):
         self.blur_algorithm = blur_algorithm
         self.blur_mask_fade = blur_mask_fade
-        self.blur_mask_center = blur_mask_center
+        self.landmark_eps = landmark_eps
 
     def blur(self, image, bounding_boxes):
         image_arr = np.array(image)
@@ -24,15 +24,22 @@ class ImageBlur:
 
         mesh_x, mesh_y = self._get_mesh(shape)
         for box in bounding_boxes:
-            center_x = box.x1 + box.width / 2.
-            center_y = box.y1 + box.height / 2.
+            center = box.center
             sigma_x = box.width / self.blur_mask_fade
             sigma_y = box.height / self.blur_mask_fade
-            delta_mask = self._gauss2d(mesh_x, mesh_y, (center_x, center_y), (sigma_x, sigma_y))
-            delta_mask = (delta_mask * self.blur_mask_center).clip(0, 1)
+            self._hard_blur_face(mask, box)
+            delta_mask = self._gauss2d(mesh_x, mesh_y, (center.x, center.y), (sigma_x, sigma_y))
             mask += delta_mask
 
         return mask.clip(0, 1)
+
+    def _hard_blur_face(self, mask, face):
+        from_x = face.left_eye.x - int(face.width * self.landmark_eps)
+        to_x = face.right_eye.x + int(face.width * self.landmark_eps)
+        from_y = face.left_eye.y - int(face.height * self.landmark_eps)
+        to_y = face.left_eye.y + int(face.height * self.landmark_eps)
+        mask[from_y: to_y,
+             from_x: to_x] = 1
 
     @staticmethod
     def _get_mesh(shape):

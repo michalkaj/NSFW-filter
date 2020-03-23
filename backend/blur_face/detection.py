@@ -1,8 +1,8 @@
 import torch
 from facenet_pytorch import MTCNN
 
+from backend.blur_face.bounding_box import FaceBoundingBox
 from settings import FACE_DETECTION_SETTINGS
-from backend.blur_face.bounding_box import BoundingBox
 
 
 class Detector:
@@ -11,12 +11,12 @@ class Detector:
         self._model = MTCNN(device=device, **FACE_DETECTION_SETTINGS)
 
     def detect(self, image):
-        boxes, _, _ = self._model.detect(image, landmarks=True)
+        boxes, _, points = self._model.detect(image, landmarks=True)
         if boxes is not None:
-            return [self._array_to_bbox(a) for a in boxes]
+            return [self._array_to_bbox(a, p) for a, p in zip(boxes, points)]
         else:
             return []
 
     @staticmethod
-    def _array_to_bbox(array_bbox):
-        return BoundingBox(*array_bbox)
+    def _array_to_bbox(array_bbox, points):
+        return FaceBoundingBox(array_bbox[:2], array_bbox[2:], *points)
