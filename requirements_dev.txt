@@ -5,3 +5,4 @@ pytest-pep8
 pytest-flakes
 pytest-isort
 pytest-cov
+matplotlib
