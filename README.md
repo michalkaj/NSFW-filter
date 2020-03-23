@@ -7,3 +7,11 @@ __Skład zespołu:__
 - Michał Kajstura
 - Mikołaj Łokuciejewski
 - Jan Zmysłowski
+
+__Instalacja:__
+
+ - Instalacja Pythona w wersji 3.8
+ - Instalacja biblioteki PyTorch (wersja 1.4.0) zgodnie z zaleceniami ze strony:
+	-  https://pytorch.org/
+ - Instalacja wymaganych bibliotek z pliku requirements.txt (pip install requirements.txt)
+ - (Do developowania) instalacja bibliotek z pliku requirements_dev.txt (analogicznie)
