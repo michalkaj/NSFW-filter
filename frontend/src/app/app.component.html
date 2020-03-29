@@ -1,8 +1,19 @@
+<header>
+  <p>NSFW-filter</p>  
+</header>
 <body>
-  <col>
-    <p>NSFW-filter</p>
-    <p>Dobra mordy i co dalej? Czy tyle wystarczy na razie?</p>
-    <p>Pisanie tego to jest górna granica moich frontendowych umiejęcności :(</p>
-    <input type="file" (change)="onFileChanged($event)" #fileInput>
-<button (click)="onUpload()">Upload!</button>
+  <div class="row">
+    <div class="col-sm-5" style="background-color:powderblue;">
+      <p>Raw image:</p>
+      <p>Dobra mordy i co dalej? Czy tyle wystarczy na razie?</p>
+      <p>Pisanie tego to jest górna granica moich frontendowych umiejęcności :(</p>
+      <input type="file" (change)="onFileChanged($event)" #fileInput style="padding-right: 4px;">
+    </div>   
+    <div class="col-sm-2" style="background-color:white;">
+      <button (click)="onUpload()" style="height: 20px; width: 100%; font-size: x-small; position: relative; top: 50%;">--Blure face--></button>
+    </div> 
+    <div class="col-sm-5" style="background-color:blue;">
+      <p>Result:</p>
+    </div>  
+  </div> 
 </body>
