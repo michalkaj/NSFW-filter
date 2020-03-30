@@ -1,4 +1,4 @@
-from flask import FLASK
+from flask import Flask, request
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -29,3 +29,8 @@ def blurFunc(filename):
 
 def showPage():
     return 'Upland here'
+
+if __name__ == '__main__':
+    app.run(debug=True, port=2137)
+
+
