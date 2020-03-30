@@ -14,6 +14,7 @@ export class AppComponent {
   private _jsonURL = 'assets/config.json';
   private paths: any = [];
   currentPath : any;
+  resultPath : any;
   selectedFile: File;
   constructor(private http: HttpClient) {
     this.getJSON().subscribe(data => this.paths=data, error => console.log(error));
@@ -33,7 +34,7 @@ export class AppComponent {
       this.http.post(this.paths['server-http']+this.paths['blur-path']+"/"+this.selectedFile.name, uploadData, {
         reportProgress: true,
         observe: 'events',
-      }).subscribe(event => {console.log(event);})
+      }).subscribe(event => {this.resultPath = event;})
 
     }
 
