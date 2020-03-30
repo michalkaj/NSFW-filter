@@ -2,6 +2,7 @@ import os
 
 PROJECT_PATH = os.path.dirname(__file__)
 DATA_PATH = None
+BACKEND_PORT = 2137
 
 FACE_DETECTION_SETTINGS = {
     'image_size': 160,

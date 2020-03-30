@@ -29,7 +29,7 @@ export class AppComponent {
 
     onUpload(){
       const uploadData = new FormData();
-      uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
+      uploadData.append('image_file', this.selectedFile, this.selectedFile.name);
       this.http.post(this.paths['server-http']+this.paths['blur-path']+"/"+this.selectedFile.name, uploadData, {
         reportProgress: true,
         observe: 'events',
