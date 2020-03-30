@@ -1,6 +1,7 @@
+import base64
 import io
 
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
 from PIL import Image
 
@@ -29,19 +30,25 @@ def _blur_image(image):
 
 def _image_to_bytes(image):
     image_bytes = io.BytesIO()
-    image.save(image_bytes, 'PNG')
-    image_bytes.seek(0)
-    return image_bytes
+    image.save(image_bytes, format='PNG')
+    # image_bytes.seek(0)
+    img_str = base64.b64encode(image_bytes.getvalue())
+    return img_str
 
+def get_image(img):
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format='PNG')
+    encoded_img = base64.encodebytes(img_byte_arr.getvalue()).decode('ascii')
+    return encoded_img
 
 @app.route('/blur/<filename>', methods=['POST'])
 def blur_image(filename):
     image_content = request.files['image_file']
     image = Image.open(image_content)
     blurred_image = _blur_image(image)
-    image_bytes = _image_to_bytes(blurred_image)
+    image_bytes = get_image(blurred_image)
+    return jsonify({'image': image_bytes})
 
-    return send_file(image_bytes, mimetype='image/PNG')
 
 
 @app.route('/nsfw/<filename>', methods=['POST'])
