@@ -16,8 +16,10 @@ export class AppComponent {
   private paths: any = [];
   currentPath : any;
   resultPath : any;
+  public isLoading: boolean;
   selectedFile: File;
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
+    this.isLoading=false;
     this.getJSON().subscribe(data => this.paths=data, error => console.log(error));
   }
     onFileChanged(event){
@@ -34,7 +36,8 @@ export class AppComponent {
       uploadData.append('image_file', this.selectedFile, this.selectedFile.name);
 
       var address = this.paths['server-http'] + this.paths['blur-path'] + "/" + this.selectedFile.name;
-
+      this.resultPath = null;
+      this.isLoading=true;
       // this.http.post(
       //   address,
       //   uploadData, {
@@ -59,6 +62,7 @@ export class AppComponent {
       const imageStr = data['image'];
       const imageB64 = 'data:image/jpeg;base64,' + imageStr;
       this.resultPath = this.sanitizer.bypassSecurityTrustUrl(imageB64);
+      this.isLoading=false;
     }
 
     public getJSON(): Observable<any> {
