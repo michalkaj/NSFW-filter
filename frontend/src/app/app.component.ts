@@ -35,6 +35,7 @@ export class AppComponent {
       const uploadData = new FormData();
       uploadData.append('image_file', this.selectedFile, this.selectedFile.name);
 
+      console.log(this.paths);
       var address = this.paths['server-http'] + this.paths['blur-path'];
       this.resultPath = null;
       this.isLoading=true;
