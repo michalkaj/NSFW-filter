@@ -1,17 +1,17 @@
-<header style="background-color: #FFF594; min-height: 40px;">
+<header style="background-color: #1565C0; min-height: 40px;">
   <h4 style="margin-bottom: 0px;">NSFW-filter  - face bluring</h4> 
 </header>
 <body>
   <div class="row">
-    <div class="col-sm-5" style="background-color:#C8E87B; min-height: 700px;">
+    <div class="col-sm-5" style="background-color:#FFFFFF; min-height: 700px;">
       <p>Raw image:</p>
       <app-photo-preview [imgUrl]="currentPath"></app-photo-preview>
     <input #file type="file" accept='image/*' (change)="onFileChanged($event)" #fileInput style="position: absolute; bottom: 12px; left: 12px;"/>
   </div>
-    <div class="col-sm-2" style="background-color:#9AFF93;">
+    <div class="col-sm-2" style="background-color:#B0BEC5;">
       <button (click)="onUpload()" style="height: 20px; width: 100%; font-size: x-small; position: relative; top: 50%;">--Blur face--></button>
     </div> 
-    <div class="col-sm-5" style="background-color:#7BE8AD;min-height: 700px;">
+    <div class="col-sm-5" style="background-color:#FFFFFF;min-height: 700px;">
       <p>Result:</p>
       <div class="d-flex align-items-center justify-content-center" style="min-height: 350px;">
         <mat-spinner mode="indeterminate" *ngIf="isLoading; else elseBlock" style=" align-items: center;
