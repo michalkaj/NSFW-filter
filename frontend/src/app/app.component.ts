@@ -35,15 +35,10 @@ export class AppComponent {
       const uploadData = new FormData();
       uploadData.append('image_file', this.selectedFile, this.selectedFile.name);
 
-      var address = this.paths['server-http'] + this.paths['blur-path'] + "/" + this.selectedFile.name;
+      var address = this.paths['server-http'] + this.paths['blur-path'];
       this.resultPath = null;
       this.isLoading=true;
-      // this.http.post(
-      //   address,
-      //   uploadData, {
-      //     observe: 'response'
-      //   }
-      // ).subscribe((res: Response) => this.displayPhoto(event));
+
 
       const httpOptions = {
         headers: new HttpHeaders({
@@ -53,16 +48,16 @@ export class AppComponent {
 
       this.http.post(
         address,
-        uploadData
-      ).subscribe(data => this.displayPhoto(data))
+        uploadData,
+        { 'responseType': 'blob' }
+      ).subscribe(blob => this.displayPhoto(blob));
 
     }
 
-    public displayPhoto(data) {
-      const imageStr = data['image'];
-      const imageB64 = 'data:image/jpeg;base64,' + imageStr;
-      this.resultPath = this.sanitizer.bypassSecurityTrustUrl(imageB64);
-      this.isLoading=false;
+    public displayPhoto(blob) {
+        let objectURL = URL.createObjectURL(blob);
+        this.resultPath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        this.isLoading = false;
     }
 
     public getJSON(): Observable<any> {
