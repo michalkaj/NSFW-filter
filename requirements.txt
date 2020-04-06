@@ -2,3 +2,5 @@ Pillow==7.0.0
 facenet_pytorch==2.2.9
 numpy==1.18.1
 opencv-python==4.2.0.32
+flask
+flask_cors

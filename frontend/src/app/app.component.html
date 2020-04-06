@@ -1,6 +1,27 @@
+<header style="background-color: #1565C0; min-height: 40px;">
+  <h4 style="margin-bottom: 0px;"><span style="color: white; "><b>NSFW-filter  - face bluring</b></span></h4>
+</header>
 <body>
-  <col>
-    <p>NSFW-filter</p>
-    <p>Dobra mordy i co dalej? Czy tyle wystarczy na razie?</p>
-    <p>Pisanie tego to jest górna granica moich frontendowych umiejęcności :(</p>
+  <div class="row h-100">
+    <div class="col-sm-5" style="background-color:#FFFFFF; min-height: 700px">
+      <p>Raw image:</p>
+      <app-photo-preview [imgUrl]="currentPath"></app-photo-preview>
+      <div>
+        <input #file type="file" accept='image/*' (change)="onFileChanged($event)" #fileInput style="position: relative; left: 12px;"/>
+      </div>
+  </div>
+    <div class="col-sm-2" style="background-color:#B0BEC5;">
+      <button (click)="onUpload()"  class="btn btn-primary" style="height: 20px; width: 100%; font-size: x-small; position: relative; top: 50%;"><b> --BLUR--> </b></button>
+    </div> 
+    <div class="col-sm-5" style="background-color:#FFFFFF;min-height: 700px;">
+      <p>Result:</p>
+      <div class="d-flex align-items-center justify-content-center" style="min-height: 350px;">
+        <mat-spinner mode="indeterminate" *ngIf="isLoading; else elseBlock" style=" align-items: center;
+        justify-content: center"></mat-spinner>
+        <ng-template #elseBlock>
+          <app-photo-preview [imgUrl]="resultPath"></app-photo-preview>
+        </ng-template>
+      </div>     
+    </div>  
+  </div> 
 </body>
