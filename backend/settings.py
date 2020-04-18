@@ -16,5 +16,5 @@ FACE_DETECTION_SETTINGS = {
 
 try:
     from user_settings import * # silence pyflakes
-except:
-    ImportError
+except ImportError:
+    pass

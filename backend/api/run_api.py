@@ -2,7 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
 
-from backend.api.api import BlurImageResource
+from api.resources import BlurImageResource
 from settings import BACKEND_PORT
 
 app = Flask(__name__)

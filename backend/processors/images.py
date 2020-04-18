@@ -1,8 +1,7 @@
-from PIL import Image
 from PIL.Image import Image, fromarray
 
-from backend.blur_face.blurring import GaussianBlur, ImageBlur
-from backend.blur_face.detection import Detector
+from blur_face.blurring import GaussianBlur, ImageBlur
+from blur_face.detection import Detector
 
 
 class Ensure3Channels:
