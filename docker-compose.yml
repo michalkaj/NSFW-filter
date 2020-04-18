@@ -1,0 +1,26 @@
+
+version: '3'
+services:
+  backend:
+    build: ./backend
+    environment:
+        FLASK_APP: api/run_api.py
+        FLASK_RUN_HOST: 0.0.0.0
+        LC_ALL: C.UTF-8
+        LANG: C.UTF-8
+
+    expose:
+        - 2137
+    ports:
+        - "2137:2137"
+    command: flask run --port 2137
+
+  frontend:
+      build: ./frontend
+      expose:
+          - 4200
+      ports:
+        - "4200:4200"
+      links:
+        - backend
+      command: ng serve --host 0.0.0.0
