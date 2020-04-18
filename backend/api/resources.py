@@ -5,8 +5,8 @@ from flask import send_file
 from flask_restful import Resource, reqparse
 from werkzeug.datastructures import FileStorage
 
-from backend.processors.images import Ensure3Channels, EnsureImageSize, BlurFaces
-from backend.processors.pipeline import Pipeline
+from processors.images import Ensure3Channels, EnsureImageSize, BlurFaces
+from processors.pipeline import Pipeline
 
 IMAGE_FILE_NAME = 'image_file'
 MAX_IMAGE_SIZE = 1000
