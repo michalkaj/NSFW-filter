@@ -1,18 +1,19 @@
 import io
 
-from PIL import Image
 from flask import send_file
 from flask_restful import Resource, reqparse
+from PIL import Image
 from werkzeug.datastructures import FileStorage
 
-from backend.processors.images import Ensure3Channels, EnsureImageSize, BlurFaces
+from backend.processors.images import (BlurFaces, Ensure3Channels,
+                                       EnsureImageSize)
 from backend.processors.pipeline import Pipeline
 
 IMAGE_FILE_NAME = 'image_file'
 MAX_IMAGE_SIZE = 1000
 
 
-class BlurImageResource(Resource):
+class BlurImageResource(Resource):  # TODO: Add tests
     def __init__(self):
         super().__init__()
         self._face_blur_pipeline = self._init_pipeline()
@@ -45,5 +46,5 @@ class BlurImageResource(Resource):
         return image_bytes
 
 
-class BlurNSFW(Resource):
+class BlurNSFW(Resource):  # TODO
     ...

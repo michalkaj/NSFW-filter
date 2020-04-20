@@ -30,5 +30,3 @@ class BlurFaces:
        detected_faces = self._detector.detect(image)
        blurred_image_np = self._blur.blur(image, detected_faces)
        return fromarray(blurred_image_np)
-
-
