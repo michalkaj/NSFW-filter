@@ -18,6 +18,8 @@ export class AppComponent {
   resultPath : any;
   public isLoading: boolean;
   selectedFile: File;
+  checkedNSFW = false;
+
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     this.isLoading=false;
     this.getJSON().subscribe(data => this.paths=data, error => console.log(error));
@@ -36,7 +38,9 @@ export class AppComponent {
       uploadData.append('image_file', this.selectedFile, this.selectedFile.name);
 
       console.log(this.paths);
-      var address = this.paths['server-http'] + this.paths['nsfw-path'];
+      var path = this.checkedNSFW ? this.paths['nsfw-path'] : this.paths['blur-path']
+      console.log(path);
+      var address = this.paths['server-http'] + path;
       this.resultPath = null;
       this.isLoading=true;
 

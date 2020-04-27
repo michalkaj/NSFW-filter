@@ -54,3 +54,4 @@ class CensorNudity:
                         if nudity['label'] not in self._labels_of_acceptable]
         blurred_image_np = self._blur.blur(image, nudity_boxes)
         return fromarray(blurred_image_np)
+

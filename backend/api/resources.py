@@ -1,8 +1,8 @@
 import io
 
-from PIL import Image
 from flask import send_file
 from flask_restful import Resource, reqparse
+from PIL import Image
 from werkzeug.datastructures import FileStorage
 
 from processors.images import Ensure3Channels, EnsureImageSize, BlurFaces, CensorNudity
@@ -12,7 +12,7 @@ IMAGE_FILE_NAME = 'image_file'
 MAX_IMAGE_SIZE = 1000
 
 
-class BlurImageResource(Resource):
+class BlurImageResource(Resource):  # TODO: Add tests
     def __init__(self):
         super().__init__()
         self._face_blur_pipeline = self._init_pipeline()
@@ -76,3 +76,4 @@ class BlurNSFW(Resource):
         image.save(image_bytes, format='JPEG')
         image_bytes.seek(0)
         return image_bytes
+
