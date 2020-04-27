@@ -7,6 +7,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+
 
 
 
@@ -20,8 +22,8 @@ import {FormsModule} from '@angular/forms';
     HttpClientModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    FormsModule,  
-    MatCheckboxModule  
+    FormsModule,
+    MatSlideToggleModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

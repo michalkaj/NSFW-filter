@@ -8,11 +8,11 @@
       <app-photo-preview [imgUrl]="currentPath"></app-photo-preview>
       <div>
         <input #file type="file" accept='image/*' (change)="onFileChanged($event)" #fileInput style="position: relative; left: 12px;"/>
-        <mat-checkbox [(ngModel)]="checkedNSFW">NSFW</mat-checkbox>
+        <span>BLUR  </span><mat-slide-toggle [(ngModel)]="checkedNSFW">NSFW</mat-slide-toggle>
       </div>
     </div>
     <div class="col-sm-2" style="background-color:#B0BEC5;">
-      <button (click)="onUpload()"  class="btn btn-primary" style="height: 20px; width: 100%; font-size: x-small; position: relative; top: 50%;"><b> --BLUR--> </b></button>
+      <button (click)="onUpload()"  class="btn btn-primary" style="height: 20px; width: 100%; font-size: x-small; position: relative; top: 50%;"><b> --PROCESS--> </b></button>
     </div> 
     <div class="col-sm-5" style="background-color:#FFFFFF;min-height: 700px;">
       <p>Result:</p>
