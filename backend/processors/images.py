@@ -38,14 +38,14 @@ class BlurFaces:
 
 
 class CensorNudity:
-    def __init__(self, blur_mask_fade=2, kernel_size=51, sigma=10):
+    def __init__(self, blur_mask_fade=2, kernel_size=101, sigma=16):
         self._detector = NudeDetector()
         self._labels_of_acceptable = ['BELLY', 'M_BREAST']
         blur_method = GaussianBlur(kernel_size, sigma)
         self._blur = ImageBlur(blur_method, blur_mask_fade)
 
     def __call__(self, image: Image) -> Image:
-        path = str(uuid.uuid4())
+        path = str(uuid.uuid4()) + '.jpg'
         Image.save(image, path)
         detected_nudity = self._detector.detect(path)
         remove(path)

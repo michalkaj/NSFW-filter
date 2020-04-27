@@ -12,4 +12,4 @@ cors = CORS(app, support_credential=True)
 
 api.add_resource(BlurImageResource, '/blur')
 api.add_resource(BlurNSFW, '/nsfw')
-app.run(debug=True, port=BACKEND_PORT)
+app.run(debug=True, port=BACKEND_PORT, use_reloader=False)
