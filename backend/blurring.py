@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 from PIL import Image
 
+from blur_face.bounding_box import FaceBoundingBox
+
 
 class ImageBlur:
     def __init__(self, blur_algorithm, blur_mask_fade, landmark_eps=0.1):
@@ -27,7 +29,8 @@ class ImageBlur:
             center = box.center
             sigma_x = box.width / self.blur_mask_fade
             sigma_y = box.height / self.blur_mask_fade
-            self._hard_blur_face(mask, box)
+            if isinstance(box, FaceBoundingBox):
+                self._hard_blur_face(mask, box)
             delta_mask = self._gauss2d(mesh_x, mesh_y, (center.x, center.y), (sigma_x, sigma_y))
             mask += delta_mask
 
