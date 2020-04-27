@@ -5,7 +5,7 @@ from flask import send_file
 from flask_restful import Resource, reqparse
 from werkzeug.datastructures import FileStorage
 
-from processors.images import Ensure3Channels, EnsureImageSize, BlurFaces
+from processors.images import Ensure3Channels, EnsureImageSize, BlurFaces, CensorNudity
 from processors.pipeline import Pipeline
 
 IMAGE_FILE_NAME = 'image_file'
@@ -55,7 +55,7 @@ class BlurNSFW(Resource):
     def post(self):
         args = self._request_parser.parse_args()
         image = Image.open(args[IMAGE_FILE_NAME])
-        blurred_image = self._face_blur_pipeline.apply(image)
+        blurred_image = self._nudity_blur_pipeline.apply(image)
         image_bytes = self._image_to_bytes(blurred_image)
 
         return send_file(image_bytes,
@@ -67,7 +67,7 @@ class BlurNSFW(Resource):
         pipeline = Pipeline()
         pipeline.add_step(Ensure3Channels())
         pipeline.add_step(EnsureImageSize(MAX_IMAGE_SIZE, MAX_IMAGE_SIZE))
-        pipeline.add_step(BlurFaces())
+        pipeline.add_step(CensorNudity())
         return pipeline
 
     @staticmethod

@@ -26,15 +26,16 @@ class EnsureImageSize:
 
 
 class BlurFaces:
-   def __init__(self, blur_mask_fade=2, kernel_size=51, sigma=10):
-       self._detector = Detector()
-       blur_method = GaussianBlur(kernel_size, sigma)
-       self._blur = ImageBlur(blur_method, blur_mask_fade)
+    def __init__(self, blur_mask_fade=2, kernel_size=51, sigma=10):
+        self._detector = Detector()
+        blur_method = GaussianBlur(kernel_size, sigma)
+        self._blur = ImageBlur(blur_method, blur_mask_fade)
 
-   def __call__(self, image: Image) -> Image:
-       detected_faces = self._detector.detect(image)
-       blurred_image_np = self._blur.blur(image, detected_faces)
-       return fromarray(blurred_image_np)
+    def __call__(self, image: Image) -> Image:
+        detected_faces = self._detector.detect(image)
+        blurred_image_np = self._blur.blur(image, detected_faces)
+        return fromarray(blurred_image_np)
+
 
 class CensorNudity:
     def __init__(self, blur_mask_fade=2, kernel_size=51, sigma=10):
@@ -53,4 +54,3 @@ class CensorNudity:
                         if nudity['label'] not in self._labels_of_acceptable]
         blurred_image_np = self._blur.blur(image, nudity_boxes)
         return fromarray(blurred_image_np)
-
