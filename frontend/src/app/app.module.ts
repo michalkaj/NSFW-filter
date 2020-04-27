@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import {  PhotoPreviewComponent } from './photo-preview/photo-preview.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {FormsModule} from '@angular/forms';
+
 
 
 @NgModule({
@@ -16,7 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    FormsModule,  
+    MatCheckboxModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

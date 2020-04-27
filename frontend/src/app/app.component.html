@@ -8,6 +8,7 @@
       <app-photo-preview [imgUrl]="currentPath"></app-photo-preview>
       <div>
         <input #file type="file" accept='image/*' (change)="onFileChanged($event)" #fileInput style="position: relative; left: 12px;"/>
+        <mat-checkbox [(ngModel)]="checkedNSFW">NSFW</mat-checkbox>
       </div>
     </div>
     <div class="col-sm-2" style="background-color:#B0BEC5;">
