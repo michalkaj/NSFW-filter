@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 from PIL import Image
 
-
 class ImageBlur:
     def __init__(self, blur_algorithm, blur_mask_fade, landmark_eps=0.1):
         self.blur_algorithm = blur_algorithm
