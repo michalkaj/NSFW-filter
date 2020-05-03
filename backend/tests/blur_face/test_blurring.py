@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import numpy as np
 
-from backend.blur_face.blurring import ImageBlur
+from blur_face.blurring import ImageBlur
 
 
 class TestImageBlur(unittest.TestCase):

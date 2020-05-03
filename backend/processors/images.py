@@ -3,7 +3,7 @@ from os import remove
 
 from PIL.Image import Image, fromarray
 
-from blurring import GaussianBlur, ImageBlur
+from blur_face.blurring import GaussianBlur, ImageBlur
 from blur_face.detection import Detector
 from nudenet import NudeDetector
 from blur_face.bounding_box import BoundingBox

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 
-from backend.processors.pipeline import Pipeline
+from processors.pipeline import Pipeline
 
 
 class TestPipeline(unittest.TestCase):

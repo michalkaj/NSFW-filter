@@ -4,8 +4,7 @@ from unittest.mock import MagicMock, patch
 import numpy as np
 from PIL.Image import fromarray
 
-from backend.processors.images import (BlurFaces, Ensure3Channels,
-                                       EnsureImageSize)
+from processors.images import BlurFaces, Ensure3Channels, EnsureImageSize
 
 
 class TestEnsure3Channels(unittest.TestCase):

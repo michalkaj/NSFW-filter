@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from backend.blur_face.detection import Detector
+from blur_face.detection import Detector
 
 
 class TestDetector(unittest.TestCase):

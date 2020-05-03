@@ -1,8 +1,8 @@
 import torch
 from facenet_pytorch import MTCNN
 
-from backend.blur_face.bounding_box import FaceBoundingBox
-from backend.settings import FACE_DETECTION_SETTINGS
+from blur_face.bounding_box import FaceBoundingBox
+from settings import FACE_DETECTION_SETTINGS
 
 
 class Detector:
