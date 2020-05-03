@@ -1,0 +1,4 @@
+.idea
+backend/.idea
+backend/.tox
+backend/__pycache__
