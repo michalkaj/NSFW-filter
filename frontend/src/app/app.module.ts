@@ -8,6 +8,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { BlurComponent } from './blur/blur.component';
+import { NsfwComponent } from './nsfw/nsfw.component';
+import { TestingComponent } from './testing/testing.component';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { StartPageComponent } from './start-page/start-page.component';
 
 
 
@@ -15,7 +20,11 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [
     AppComponent,
-    PhotoPreviewComponent
+    PhotoPreviewComponent,
+    BlurComponent,
+    NsfwComponent,
+    TestingComponent,
+    StartPageComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +32,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatSlideToggleModule  
+    MatSlideToggleModule,
+    AppRoutingModule,  
   ],
   providers: [],
   bootstrap: [AppComponent]
