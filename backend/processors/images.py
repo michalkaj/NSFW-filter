@@ -1,13 +1,14 @@
 import uuid
-from os import remove
+from pathlib import Path
 
-from PIL.Image import Image, fromarray
 import tensorflow as tf
-
-from blur_face.blurring import PixelBlur, GaussianBlur, ImageBlur
-from blur_face.detection import Detector
+from PIL.Image import Image, fromarray
 from nudenet import NudeClassifier
+
+from blur_face.blurring import ImageBlur, FaceBlur
+from blur_face.blurring_algorithms import GaussianBlur, PixelBlur
 from blur_face.bounding_box import BoundingBox
+from blur_face.detection import Detector
 
 
 class Ensure3Channels:
@@ -30,7 +31,7 @@ class BlurFaces:
     def __init__(self, blur_mask_fade=2, kernel_size=51, sigma=10):
         self._detector = Detector()
         blur_method = GaussianBlur(kernel_size, sigma)
-        self._blur = ImageBlur(blur_method, blur_mask_fade)
+        self._blur = FaceBlur(blur_method, blur_mask_fade)
 
     def __call__(self, image: Image) -> Image:
         detected_faces = self._detector.detect(image)
@@ -46,14 +47,18 @@ class CensorNudity:
         self._graph = tf.get_default_graph()
 
     def __call__(self, image: Image) -> Image:
-        path = str(uuid.uuid4()) + '.jpg'
+        # Create temporary file (nudenet needs image to be saved)
+        path = Path(str(uuid.uuid4()) + '.jpg')
         Image.save(image, path)
 
         with self._graph.as_default():
-            detected_nudity = self._classifier.classify(path)
-        remove(path)
+            detected_nudity = self._classifier.classify([path])
+
+        # Delete temporary file
+        path.unlink()
+
         if detected_nudity[path]['unsafe'] > self._threshold:
-            nudity_boxes = [BoundingBox(0, 0, image.size[0], image.size[1])]
+            nudity_boxes = [BoundingBox(0, 0, *image.size)]
             blurred_image_np = self._blur.blur(image, nudity_boxes)
             return fromarray(blurred_image_np)
         else:

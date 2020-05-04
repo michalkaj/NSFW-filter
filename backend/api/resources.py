@@ -5,11 +5,13 @@ from flask import send_file
 from flask_restful import Resource, reqparse
 from werkzeug.datastructures import FileStorage
 
+from processors.pipeline import Pipeline
+
 IMAGE_FILE_NAME = 'image_file'
 
 
 class BlurImageResource(Resource):  # TODO: Add tests
-    def __init__(self, pipeline):
+    def __init__(self, pipeline: Pipeline):
         super().__init__()
         self._pipeline = pipeline
         self._request_parser = reqparse.RequestParser()
@@ -35,7 +37,7 @@ class BlurImageResource(Resource):  # TODO: Add tests
 
 
 class BlurNSFW(Resource):
-    def __init__(self, pipeline):
+    def __init__(self, pipeline: Pipeline):
         super().__init__()
         self._pipeline = pipeline
         self._request_parser = reqparse.RequestParser()
