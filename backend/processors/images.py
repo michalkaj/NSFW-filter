@@ -2,6 +2,7 @@ import uuid
 from os import remove
 
 from PIL.Image import Image, fromarray
+import tensorflow as tf
 
 from blur_face.blurring import PixelBlur, GaussianBlur, ImageBlur
 from blur_face.detection import Detector
@@ -38,18 +39,20 @@ class BlurFaces:
 
 
 class CensorNudity:
-    def __init__(self, blur_mask_fade=2, kernel_size=101, sigma=16):
+    def __init__(self, blur_mask_fade=2, threshold=0.7):
         self._classifier = NudeClassifier()
-        self._labels_of_acceptable = ['BELLY', 'M_BREAST']
-        blur_method = PixelBlur(30)
-        self._blur = ImageBlur(blur_method, blur_mask_fade)
+        self._blur = ImageBlur(PixelBlur(30), blur_mask_fade)
+        self._threshold = threshold
+        self._graph = tf.get_default_graph()
 
     def __call__(self, image: Image) -> Image:
         path = str(uuid.uuid4()) + '.jpg'
         Image.save(image, path)
-        detected_nudity = self._classifier.classify(path)
+
+        with self._graph.as_default():
+            detected_nudity = self._classifier.classify(path)
         remove(path)
-        if detected_nudity[path]['unsafe'] > 0.7:
+        if detected_nudity[path]['unsafe'] > self._threshold:
             nudity_boxes = [BoundingBox(0, 0, image.size[0], image.size[1])]
             blurred_image_np = self._blur.blur(image, nudity_boxes)
             return fromarray(blurred_image_np)
