@@ -4,6 +4,7 @@ from pathlib import Path
 import tensorflow as tf
 from PIL.Image import Image, fromarray
 from nudenet import NudeClassifier
+from settings import NUDITY_DETECTION_SETTINGS
 
 from blur_face.blurring import ImageBlur, FaceBlur
 from blur_face.blurring_algorithms import GaussianBlur, PixelBlur
@@ -40,7 +41,7 @@ class BlurFaces:
 
 
 class CensorNudity:
-    def __init__(self, blur_mask_fade=2, threshold=0.7):
+    def __init__(self, blur_mask_fade=NUDITY_DETECTION_SETTINGS['blur_mask_fade'], threshold=NUDITY_DETECTION_SETTINGS['threshold']):
         self._classifier = NudeClassifier()
         self._blur = ImageBlur(PixelBlur(30), blur_mask_fade)
         self._threshold = threshold

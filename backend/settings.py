@@ -15,6 +15,11 @@ FACE_DETECTION_SETTINGS = {
     'select_largest': False
 }
 
+NUDITY_DETECTION_SETTINGS = {
+    'blur_mask_fade': 2,
+    'threshold': 0.6
+}
+
 try:
     from user_settings import * # silence pyflakes
 except ImportError:
