@@ -1,8 +1,8 @@
-import cv2
-import numpy as np
-from PIL import Image
+from typing import Tuple, Iterable
 
-from blur_face.bounding_box import FaceBoundingBox
+import numpy as np
+
+from blur_face.bounding_box import FaceBoundingBox, BoundingBox
 
 
 class ImageBlur:
@@ -21,7 +21,17 @@ class ImageBlur:
         final_image_arr = image_arr * (1 - mask_multidim) + image_arr_blurred * mask_multidim
         return final_image_arr.clip(0, 255).astype(np.uint8)
 
-    def _get_blur_mask(self, shape, bounding_boxes):
+    def _get_blur_mask(self, shape: Tuple, bounding_boxes: Iterable[BoundingBox]):
+        mask = np.zeros(shape[:2], dtype=np.float64)
+
+        for box in bounding_boxes:
+            mask[box.upper_left.y: box.lower_right.y, box.upper_left.x: box.lower_right.x] = 1.
+
+        return mask
+
+
+class FaceBlur(ImageBlur):
+    def _get_blur_mask(self, shape: Tuple, bounding_boxes: Iterable[FaceBoundingBox]):
         mask = np.zeros(shape[:2], dtype=np.float64)
 
         mesh_x, mesh_y = self._get_mesh(shape)
@@ -29,12 +39,12 @@ class ImageBlur:
             center = box.center
             sigma_x = box.width / self.blur_mask_fade
             sigma_y = box.height / self.blur_mask_fade
-            if isinstance(box, FaceBoundingBox):
-                self._hard_blur_face(mask, box)
+            self._hard_blur_face(mask, box)
             delta_mask = self._gauss2d(mesh_x, mesh_y, (center.x, center.y), (sigma_x, sigma_y))
             mask += delta_mask
 
         return mask.clip(0, 1)
+
 
     def _hard_blur_face(self, mask, face):
         from_x = face.left_eye.x - int(face.width * self.landmark_eps)
@@ -43,6 +53,7 @@ class ImageBlur:
         to_y = face.left_eye.y + int(face.height * self.landmark_eps)
         mask[from_y: to_y,
              from_x: to_x] = 1
+
 
     @staticmethod
     def _get_mesh(shape):
@@ -59,28 +70,3 @@ class ImageBlur:
         z = 1. / denom * exp
         z /= z.max()
         return z
-
-
-class GaussianBlur:
-    def __init__(self, kernel_size=3, sigma=1):
-        self.kernel_size = kernel_size
-        self.sigma = sigma
-
-    def __call__(self, image):
-        image = np.array(image)
-        return cv2.GaussianBlur(
-            image,
-            (self.kernel_size, self.kernel_size),
-            self.sigma
-        )
-
-
-class PixelBlur:
-    def __init__(self, shrinkage_factor):
-        self.shrinkage_factor = shrinkage_factor
-
-    def __call__(self, image):
-        small_size = (int(image.size[0] / self.shrinkage_factor),
-                      int(image.size[1] / self.shrinkage_factor))
-        image_small = image.resize(small_size, resample=Image.BILINEAR)
-        return image_small.resize(image.size, Image.NEAREST)
